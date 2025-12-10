@@ -5,6 +5,8 @@ import {
   PencilIcon,
   PlusIcon,
   TrashIcon,
+  Upload,
+  UploadCloud,
   UploadCloudIcon,
   XIcon,
 } from "lucide-react";
@@ -32,6 +34,12 @@ const Dashboard = () => {
     navigate(`/app/builder/1`);
   };
 
+  const uploadResumeHandler = async (e) => {
+    e.preventDefault();
+    setShowUploadResume(false);
+    navigate(`/app/builder/1`);
+  };
+
   useEffect(() => {
     loadAllResume();
   }, []);
@@ -56,7 +64,10 @@ const Dashboard = () => {
             </p>
           </button>
 
-          <button className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-neutral-600 border border-dashed border-neutral-400 group hover:border-rose-500 hover:shadow-lg transition-all duration-300 cursor-pointer">
+          <button
+            onClick={() => setShowUploadResume(true)}
+            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-neutral-600 border border-dashed border-neutral-400 group hover:border-rose-500 hover:shadow-lg transition-all duration-300 cursor-pointer"
+          >
             <UploadCloudIcon className="size-11 transition-all duration-300 p-2.5 bg-linear-to-br from-rose-300 to-rose-500 text-white rounded-full " />
             <p className="text-sm group-hover:text-rose-600 transition-all duration-300">
               Upload Resume
@@ -120,9 +131,12 @@ const Dashboard = () => {
             >
               <h2 className="text-xl font-bold mb-4">Create a Resume</h2>
               <input
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
                 type="text"
                 placeholder="Resume Title"
                 className="w-full px-4 py-2 mb-4 focus:border-indigo-600 ring-indigo-600"
+                required
               />
 
               <button className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
@@ -132,6 +146,73 @@ const Dashboard = () => {
                 className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-700 cursor-pointer transition-colors"
                 onClick={() => {
                   setShowCreateResume(false);
+                  setTitle("");
+                }}
+              />
+            </div>
+          </form>
+        )}
+
+        {showUploadResume && (
+          <form
+            onSubmit={uploadResumeHandler}
+            onClick={() => {
+              setShowUploadResume(false);
+            }}
+            className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center"
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="relative bg-neutral-50 border shadow-md rounded-lg w-full max-w-sm p-6"
+            >
+              <h2 className="text-xl font-bold mb-4">Upload a Resume</h2>
+              <input
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                type="text"
+                placeholder="Resume Title"
+                className="w-full px-4 py-2 mb-4 focus:border-indigo-600 ring-indigo-600"
+                required
+              />
+
+              <div>
+                <label
+                  htmlFor="resume-input"
+                  className="block text-sm text-neutral-700"
+                >
+                  Select Resume
+                  <div className="flex flex-col items-center justify-center gap-2 border group text-neutral-400 border-neutral-400 border-dashed rounded-md p-4 py-10 my-4 hover:border-indigo-500 hover:text-indigo-700 cursor-pointer transition-colors">
+                    {resume ? (
+                      <p className="text-indigo-700">{resume.name}</p>
+                    ) : (
+                      <>
+                        <UploadCloud className="size-14 stroke-1" />
+                        <p>Upload Resume</p>
+                      </>
+                    )}
+                  </div>
+                </label>
+                <input
+                  type="file"
+                  name="Upload Resume"
+                  id="resume-input"
+                  accept=".pdf"
+                  hidden
+                  onChange={(e) => {
+                    setResume(e.target.files[0]);
+                  }}
+                />
+              </div>
+
+              <button className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+                Upload Resume
+              </button>
+              <XIcon
+                className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-700 cursor-pointer transition-colors"
+                onClick={() => {
+                  setShowUploadResume(false);
                   setTitle("");
                 }}
               />
