@@ -6,15 +6,30 @@ import {
   PlusIcon,
   TrashIcon,
   UploadCloudIcon,
+  XIcon,
 } from "lucide-react";
 import { dummyResumeData } from "../assets/assets.js";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+
   const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
   const [allResumes, setAllResumes] = useState([]);
+  const [showCreateResume, setShowCreateResume] = useState(false);
+  const [showUploadResume, setShowUploadResume] = useState(false);
+  const [title, setTitle] = useState("");
+  const [resume, setResume] = useState(null);
+  const [editResumeId, setEditResumeId] = useState("");
 
   const loadAllResume = () => {
     setAllResumes(dummyResumeData);
+  };
+
+  const createResumeHandler = async (e) => {
+    e.preventDefault();
+    setShowCreateResume(false);
+    navigate(`/app/builder/1`);
   };
 
   useEffect(() => {
@@ -29,7 +44,12 @@ const Dashboard = () => {
         </p>
 
         <div className="flex gap-4">
-          <button className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-neutral-600 border border-dashed border-neutral-400 group hover:border-indigo-400 hover:shadow-lg transition-all duration-300 cursor-pointer">
+          <button
+            onClick={() => {
+              setShowCreateResume(true);
+            }}
+            className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-neutral-600 border border-dashed border-neutral-400 group hover:border-indigo-400 hover:shadow-lg transition-all duration-300 cursor-pointer"
+          >
             <PlusIcon className="size-11 transition-all duration-300 p-2.5 bg-linear-to-br from-indigo-300 to-indigo-500 text-white rounded-full " />
             <p className="text-sm group-hover:text-indigo-600 transition-all duration-300">
               Create Resume
@@ -76,15 +96,48 @@ const Dashboard = () => {
                 </p>
 
                 <div className="absolute top-1 ring-1 group-hover:flex items-center hidden rounded-sm">
-                  <TrashIcon
-                    className="size-7 p-1.5 hover:bg-white/50 rounded text-neutral-700 transition-colors"
-                  />
+                  <TrashIcon className="size-7 p-1.5 hover:bg-white/50 rounded text-neutral-700 transition-colors" />
                   <PencilIcon className="size-7 p-1.5 hover:bg-white/50 rounded text-neutral-700 transition-colors" />
                 </div>
               </button>
             );
           })}
         </div>
+
+        {showCreateResume && (
+          <form
+            onSubmit={createResumeHandler}
+            onClick={() => {
+              setShowCreateResume(false);
+            }}
+            className="fixed inset-0 bg-black/70 backdrop-blur bg-opacity-50 z-10 flex items-center justify-center"
+          >
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              className="relative bg-neutral-50 border shadow-md rounded-lg w-full max-w-sm p-6"
+            >
+              <h2 className="text-xl font-bold mb-4">Create a Resume</h2>
+              <input
+                type="text"
+                placeholder="Resume Title"
+                className="w-full px-4 py-2 mb-4 focus:border-indigo-600 ring-indigo-600"
+              />
+
+              <button className="w-full py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors">
+                Create Resume
+              </button>
+              <XIcon
+                className="absolute top-4 right-4 text-neutral-500 hover:text-neutral-700 cursor-pointer transition-colors"
+                onClick={() => {
+                  setShowCreateResume(false);
+                  setTitle("");
+                }}
+              />
+            </div>
+          </form>
+        )}
       </div>
     </div>
   );
