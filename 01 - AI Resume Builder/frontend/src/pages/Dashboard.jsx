@@ -44,6 +44,19 @@ const Dashboard = () => {
     e.preventDefault();
   };
 
+  const deleteResumeHandler = async (resumeId) => {
+    const confirm = window.confirm(
+      "Are you sure to delete the selected resume?"
+    );
+    if (confirm) {
+      setAllResumes((prev) =>
+        prev.filter((resume) => {
+          return resume._id !== resumeId;
+        })
+      );
+    }
+  };
+
   useEffect(() => {
     loadAllResume();
   }, []);
@@ -117,7 +130,10 @@ const Dashboard = () => {
                   onClick={(e) => e.stopPropagation()}
                   className="absolute top-1 right-1 group-hover:flex items-center hidden rounded-sm"
                 >
-                  <TrashIcon className="size-7 p-1.5 hover:bg-white/50 rounded text-neutral-700 transition-colors" />
+                  <TrashIcon
+                    onClick={() => deleteResumeHandler(resume._id)}
+                    className="size-7 p-1.5 hover:bg-white/50 rounded text-neutral-700 transition-colors"
+                  />
                   <PencilIcon
                     onClick={(e) => {
                       setEditResumeId(`${resume._id}`);
