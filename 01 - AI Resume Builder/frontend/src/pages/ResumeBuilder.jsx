@@ -16,6 +16,7 @@ import PersonalInfoForm from "../components/PersonalInfoForm";
 import ResumePreview from "../components/ResumePreview";
 import TemplateSelector from "../components/TemplateSelector";
 import ColorPicker from "../components/ColorPicker";
+import ProfessionalSummaryForm from "../components/ProfessionalSummaryForm";
 
 const ResumeBuilder = () => {
   const { resumeId } = useParams();
@@ -122,8 +123,10 @@ const ResumeBuilder = () => {
                     <button
                       className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-500 transition-all"
                       disabled={activeSectionIndex === 0}
-                      onClick={(prevIdx) =>
-                        setActiveSectionIndex(() => Math.max(prevIdx - 1, 0))
+                      onClick={() =>
+                        setActiveSectionIndex((prevIdx) =>
+                          Math.max(prevIdx - 1, 0)
+                        )
                       }
                     >
                       <ChevronLeft className="size-4" />
@@ -136,8 +139,8 @@ const ResumeBuilder = () => {
                       activeSectionIndex === sections.length - 1 && "opacity-50"
                     }`}
                     disabled={activeSectionIndex === sections.length - 1}
-                    onClick={(prevIdx) =>
-                      setActiveSectionIndex(() =>
+                    onClick={() =>
+                      setActiveSectionIndex((prevIdx) =>
                         Math.min(prevIdx + 1, sections.length - 1)
                       )
                     }
@@ -161,6 +164,19 @@ const ResumeBuilder = () => {
                     }
                     removeBackground={removeBackground}
                     setRemoveBackground={setRemoveBackground}
+                  />
+                )}
+
+                {activeSection.id === "summary" && (
+                  <ProfessionalSummaryForm
+                    data={resumeData.professional_summary}
+                    onChange={(data) =>
+                      setResumeData((prev) => ({
+                        ...prev,
+                        professional_summary: data,
+                      }))
+                    }
+                    setResumeData={setResumeData}
                   />
                 )}
               </div>
