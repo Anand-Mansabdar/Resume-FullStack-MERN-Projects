@@ -233,7 +233,9 @@ const ResumeBuilder = () => {
                 )}
               </div>
 
-              
+              <button className="bg-linear-to-r from-indigo-100 to-indigo-200 ring-indigo-300 text-indigo-600 ring hover:ring-indigo-400 transition-all rounded-md px-6 py-2 mt-6 text-sm ">
+                Save Changes
+              </button>
             </div>
           </div>
 
