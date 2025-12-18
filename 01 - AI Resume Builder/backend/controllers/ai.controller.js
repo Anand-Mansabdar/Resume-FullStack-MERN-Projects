@@ -96,9 +96,7 @@ export const uploadResume = async (req, res) => {
       type: String,
       default: "",
     },
-    skills: {
-      type: String,
-    },
+    skills: ["skill1", "skill2", "skill3"],
     personal_info: {
       image: { type: String, default: "" },
       full_name: { type: String, default: "" },
@@ -147,7 +145,7 @@ export const uploadResume = async (req, res) => {
     });
 
     const extractedData = response.choices[0].message.content;
-    const parsedData = JSON.parse({ extractedData });
+    const parsedData = JSON.parse(extractedData);
 
     const newResume = await resumeModel.create({
       userId,

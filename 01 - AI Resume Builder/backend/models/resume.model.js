@@ -18,7 +18,7 @@ const resumeSchema = new mongoose.Schema(
       type: String,
       default: "classic",
     },
-    accentColor: {
+    accent_color: {
       type: String,
       default: "#3b82f6",
     },
@@ -27,7 +27,8 @@ const resumeSchema = new mongoose.Schema(
       default: "",
     },
     skills: {
-      type: String,
+      type: [String],
+      default: [],
     },
     personal_info: {
       image: { type: String, default: "" },
