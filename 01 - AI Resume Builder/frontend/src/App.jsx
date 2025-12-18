@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Layout from "./pages/Layout.jsx";
 import Preview from "./pages/Preview.jsx";
@@ -9,6 +8,7 @@ import ResumeBuilder from "./pages/ResumeBuilder.jsx";
 import { useDispatch } from "react-redux";
 import api from "./config/api.js";
 import { login, setLoading } from "./app/features/authSlice.js";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -40,6 +40,7 @@ const App = () => {
   }, []);
   return (
     <>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="app" element={<Layout />}>

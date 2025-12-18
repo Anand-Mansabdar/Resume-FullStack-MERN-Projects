@@ -110,7 +110,10 @@ export const getUserById = async (req, res) => {
     // User exists
     return res.status(200).json({
       message: "User fetched successfully",
-      token,
+      user: {
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     return res.status(400).json({
