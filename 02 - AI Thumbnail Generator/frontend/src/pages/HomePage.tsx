@@ -6,14 +6,14 @@ import ContactSection from "../sections/ContactSection";
 import CTASection from "../sections/CTASection";
 
 export default function HomePage() {
-    return (
-        <>
-            <HeroSection />
-            <FeaturesSection />
-            <TestimonialSection />
-            <PricingSection />
-            <ContactSection />
-            <CTASection />
-        </>
-    );
+  return (
+    <>
+      <HeroSection />
+      <FeaturesSection />
+      <TestimonialSection />
+      <PricingSection />
+      <ContactSection />
+      <CTASection />
+    </>
+  );
 }
