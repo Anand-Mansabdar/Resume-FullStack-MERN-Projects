@@ -9,6 +9,7 @@ import {
 import SoftBackdrop from "../components/SoftBackdrop";
 import AspectRatioSelector from "../components/AspectRatioSelector";
 import StyleSelector from "../components/StyleSelector";
+import ColorSchemeSelector from "../components/ColorSchemeSelector";
 
 const GeneratePage = () => {
   const { id } = useParams();
@@ -75,9 +76,12 @@ const GeneratePage = () => {
                   />
 
                   {/* Color Scheme Selector */}
+                  <ColorSchemeSelector
+                    value={colorSchemeId}
+                    onChange={setColorSchemeId}
+                  />
 
                   {/* Additional Details Input */}
-
                   <div className="space-y-2">
                     <label className="block text-sm font-medium">
                       Additional Prompts{" "}
