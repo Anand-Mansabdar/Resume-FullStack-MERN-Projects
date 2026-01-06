@@ -4,6 +4,7 @@ import "dotenv/config";
 import connectDB from "./config/db.js";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import authRouter from "./routes/auth.routes.js";
 
 declare module "express-session" {
   interface SessionData {
@@ -40,6 +41,9 @@ const PORT = process.env.PORT || 3000;
 app.get("/", (req: Request, res: Response) => {
   res.send("Server is Live!!");
 });
+
+// Authentication API
+app.use("/api/auth", authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
